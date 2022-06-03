@@ -16,7 +16,7 @@ import javax.swing.JFrame;
 
 public class DeptManager extends JFrame implements ActionListener{
 	public final String _DRIVER = "oracle.jdbc.driver.OracleDriver";
-	public final String _URL = "jdbc:oracle:thin:@192.168.40.3:1521:orcl11";
+	public final String _URL =  "jdbc:oracle:thin:@127.0.0.1:1521:orcl11";
 	public final String _USER = "scott";
 	public final String _PW = "tiger";
 	Connection 			con   = null;// Interface - 단독으로 인스턴스 불가 A a = new A()
@@ -25,14 +25,16 @@ public class DeptManager extends JFrame implements ActionListener{
 	// 조회결과를 받아서 자바에서 출력할 때 오라클에 커서를 조작해야 함.
 	ResultSet 			rs	  = null;
 	String sql = "SELECT deptno, dname, loc FROM dept";	
+	
 	JButton jbtn_select = new JButton("조회");
+	
 	public DeptManager() {
 		// 이벤트 처리를 담당하는 핸들러 클래스의 주소번지
 		// 내안에 actionPerformed 메소드가 재정의 되어있다면 this
-		jbtn_select.addActionListener(this);
+		jbtn_select.addActionListener(this); //
 		initDisplay();
 	}
-	public List<Map<String,Object>> getDeptList(){
+	public List<Map<String,Object>> getDeptList(){ //겟뎁리스트 매소드
 		List<Map<String,Object>> deptList = null;
 		try {
 			// 오라클 제조사가 제공하는 드라이버 클래스가 있어야 함. 
@@ -43,9 +45,10 @@ public class DeptManager extends JFrame implements ActionListener{
 			pstmt = con.prepareStatement(sql);
 			// 전달 된 select문에 대한 처리를 요청하고 커서 받아내기
 			rs = pstmt.executeQuery();
-			deptList = new ArrayList<>();
+			deptList = new ArrayList<>(); //어레이리스트배열을 deptlist에 담는다.
+			
 			Map<String, Object> rmap = null;
-			while(rs.next()) {
+			while(rs.next()) { //한개씩 꺼내오기
 				rmap = new HashMap<>();
 				rmap.put("deptno", rs.getInt("deptno"));
 				rmap.put("dname", rs.getString("dname"));
@@ -60,7 +63,7 @@ public class DeptManager extends JFrame implements ActionListener{
 		}		
 		return deptList;
 	}
-	public void initDisplay() {
+	public void initDisplay() { //화면 ui
 		this.add("North", jbtn_select);
 		this.setSize(500, 400);
 		this.setVisible(true);
@@ -74,7 +77,7 @@ public class DeptManager extends JFrame implements ActionListener{
 			List<Map<String,Object>> deptList = getDeptList();
 			for(int i=0;i<deptList.size();i++) {
 				Map<String,Object> rmap = deptList.get(i);
-				System.out.println(rmap.get("deptno"));
+				System.out.println(rmap.get("loc"));
 			}
 		}
 		

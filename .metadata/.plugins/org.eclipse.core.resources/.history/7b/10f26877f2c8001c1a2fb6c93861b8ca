@@ -1,0 +1,15 @@
+package sec02_runtime_exception;
+
+public class TryWithResourcesExample {
+
+	public static void main(String[] args) {
+
+		try(FileInputStream fis = new FileInputStream("file.txt")){
+			fis.read();
+		}catch(Exception e) {
+			System.out.println("예외처리 코드가 실행되었습니다.");
+		}
+		
+	}
+
+}

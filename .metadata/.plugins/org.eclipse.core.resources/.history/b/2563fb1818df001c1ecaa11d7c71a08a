@@ -1,0 +1,13 @@
+package project4;
+
+import project5.Personality;
+
+public class Person_INTP implements Personality {
+
+	@Override
+	public void personality() {
+		System.out.println("팩폭 운동 성격\n귀차니즘이 온몸을 잠식해버리는 타입! 홈 트레이닝 영상을 보면서 의심하고 비판할 거리를 찾아낸다. 웬만한 팩폭도 먹히지 않는 강철 멘탈의 소유자!");
+		
+	}
+
+}

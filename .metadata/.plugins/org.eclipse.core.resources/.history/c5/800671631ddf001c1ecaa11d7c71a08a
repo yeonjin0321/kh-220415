@@ -1,0 +1,10 @@
+package jdbc.oracle;
+
+public class Jdbc_oracle {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

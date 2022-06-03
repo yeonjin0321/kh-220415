@@ -1,0 +1,110 @@
+package ajdbc.dept;
+
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import address.view2.DBConnectionMgr;
+
+public class LoginDao extends JFrame implements ActionListener {
+	JPanel jp_north = new JPanel();
+	JTextField jtf_id = new JTextField("",10);
+	JButton jbtn_check = new JButton("ID중복검사");
+
+	public LoginDao() {
+		jbtn_check.addActionListener(this);
+		// 화면을 그려주는 메소드 호출
+		initDisplay();
+	}
+
+	public void initDisplay() {
+		jp_north.setLayout(new BorderLayout());
+		jp_north.add("Center", jtf_id);
+		jp_north.add("East", jbtn_check);
+		this.add("North", jp_north);
+		this.setSize(500, 300);
+		this.setVisible(true);
+	}
+
+	/***************
+	 * 아이디 중복체크
+	 * 
+	 * @param mem_id - 사용자가 입력한 아이디
+	 * @return 1 - 아이디 존재함, 0 -아이디 사용 가능함. -1: 디폴트(end of file)
+	 *****************/
+
+	public int idCheck(String mem_id) {
+		// 물리적으로 떨어져 있는 오라클 서버의 연결통로 만들기
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = -1;
+
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT nvl((");
+		sql.append("select 1");
+		sql.append("  FROM DUAL");
+		sql.append("WHERE EXISTS (SELECT mem_name");
+		sql.append("FROM member");
+		sql.append("   WHERE mem_id =?) ");
+		sql.append("   ),0 )");
+		sql.append("from dual");
+		DBConnectionMgr dbMgr = new DBConnectionMgr();
+
+		try {
+			con = dbMgr.getConnection();
+			// ?자리에 들어갈 아이디를 설정해야 함.
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, mem_id); // 57번라인 ?
+			// 셀렉트 처리시는 익스튜트쿼리()호출
+			// 인서트, 업데이트,딜리트 처리시는 익스튜트쿼리() 호출
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt(1); // 첫번째 컬럼자리의 값을 받아온다.
+
+			}
+			System.out.println("result : "+result);
+		} catch (Exception e) {
+
+		}
+
+		return result;
+	}
+
+	public static void main(String[] args) {
+		LoginDao loginDao = new LoginDao();
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) { // 액션리스너 처리
+		Object obj = e.getSource(); // 버튼이 눌렸다는것. 소스 가져오기
+		if (obj == jbtn_check) { // 버튼이 눌렸다면,
+			System.out.println("ID중복체크 호출 성공");
+			// 사용자가 입력한 아이디를 가져와 담기
+			String user_id = jtf_id.getText();
+			int result = idCheck(user_id);
+			// 입력한 아이디가 존재 하는거야?
+			if (result == 1) {
+				// 입력한 아이디는 사용 못해.(중복아이디가 있다는뜻)
+				// 다시 입력해야 된다.
+				jtf_id.setText(""); // 초기화
+				return; // if문을 빠져나갈땐 return문사용.
+			}
+			// 입력한 아이디가 없는데?
+			else if (result == 0) {
+				// 입력한 아이디를 사용할 수 있어.
+			}
+		}
+
+	}
+
+}

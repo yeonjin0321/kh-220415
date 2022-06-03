@@ -1,0 +1,18 @@
+package com.day16;
+//서브창
+import java.awt.FlowLayout;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+
+public class Dialog_1 extends JDialog {
+// 디폴트 생성자는 생략가능함. -JVM -넌개발자가 아니잖아? 근데 왜 가능할까?
+	//언제? - 인스턴스화를 했을떄 - 어디서? (main_1 20번라인)
+	// Dialog_1 dialog = null; 다이얼로그 언더바 형태의 변수 dialog 선언.
+	// dialog = new dialog_1(); 다디얼로그 언더바 1 객체 생성. 메모리 로딩.
+	// Dialog_1 dialog = new Dialog_1(); 생성자 호출 인스턴스화에 대해서.
+	public void initDisplay() { //화면을 그려주는 메소드 구현이다. [서브창-자녀창이다]
+		this.setTitle("메인 서브창");
+		this.setSize(300, 400);
+		this.setVisible(true);
+	}
+}

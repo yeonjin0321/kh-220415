@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="1134"/>
+		<item key="DIALOG_Y_ORIGIN" value="589"/>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item key="wrap" value="true"/>
+		<item key="casesensitive" value="false"/>
+		<item key="wholeword" value="false"/>
+		<item key="incremental" value="false"/>
+		<item key="isRegEx" value="false"/>
+		<item key="selection" value="user"/>
+		<list key="findhistory">
+			<item value="user"/>
+			<item value="main"/>
+			<item value="deo"/>
+			<item value="dep"/>
+			<item value="Quiz0516_1"/>
+			<item value="intArr"/>
+			<item value="math"/>
+		</list>
+		<list key="replacehistory">
+			<item value="Test_1"/>
+			<item value="jumsu"/>
+			<item value="jpn"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="1244"/>
+		<item key="DIALOG_Y_ORIGIN" value="461"/>
+		<item key="DIALOG_WIDTH" value="393"/>
+		<item key="DIALOG_HEIGHT" value="524"/>
+		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-18|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
+	</section>
+</section>

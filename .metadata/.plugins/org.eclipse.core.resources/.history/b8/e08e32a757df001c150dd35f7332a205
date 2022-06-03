@@ -1,0 +1,16 @@
+package CrudProject;
+
+public class LunchManageDAO extends JdbcDAO {
+
+	private static LunchManageDAO _dao;
+	
+	//2 생성자의 은닉화 선언
+		private LunchManageDAO() {
+		
+		}
+		//3 정적영역에서 클래스의 인스턴스를 생성하여 참조필드에 저장
+		static {
+			_dao = new LunchManageDAO();
+		}
+	
+}

@@ -1,0 +1,20 @@
+package jdbc.oracle;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+public class JDBCTest2 {
+	
+	public static void main(String[] args) {
+		Connection con = null;
+		PreparedStatement 	pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT deptno,dname,loc FROM dept ";
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver);
+		} catch (Exception e) {
+			con =DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:orcl11","scott","tiger")	;
+			pstmt =con.prepareStatement(sql);
+}

@@ -1,0 +1,16 @@
+package jdbc.oracle;
+
+public class JDBCTest2 {
+	
+	public static void main(String[] args) {
+		Connection con = null;
+		PreparedStatement 	pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT deptno,dname,loc FROM dept ";
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}

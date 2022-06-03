@@ -1,0 +1,5 @@
+package CrudProject;
+
+public class LunchManageDAO extends JdbcDAO {
+
+}

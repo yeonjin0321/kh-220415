@@ -1,0 +1,21 @@
+package sec02_runtime_exception;
+
+public class FileInputStream implements AutoCloseable {
+	
+	private String file;
+	public FileInputStream(String file) {
+		this.file=file;
+	}
+	
+	@Override
+	public void close() throws Exception{
+		System.out.println("파일을 닫습니다.");
+	}
+
+	
+
+		
+		
+	}
+
+}

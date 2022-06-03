@@ -1,0 +1,43 @@
+package ajdbc.dept;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+//생성자 만들기 -> 인잇디스플레이 생성자 만들기-> 제이프레임 속성 붙여보기 -> 액션리스너 처리해보기
+
+public class Login_view2 extends JFrame implements ActionListener {
+	JPanel jp_center = new JPanel();
+	JTextField jtf_id = new JTextField("",10);
+	JTextField jtf_pw = new JTextField("",10);
+	JPanel jp_east = new JPanel();
+	JButton jbt_login =new JButton();
+	
+	Login_view2(){
+		jbtn_login.addActionListener(this);
+		initDisplay();
+	}
+	
+	public void initDisplay() {
+		
+	}
+	
+	
+	public static void main(String[] args) {
+
+		
+		new Login_view2();
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
