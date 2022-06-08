@@ -1,0 +1,50 @@
+package ajdbc.dept;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+
+import address.view2.DBConnectionMgr;
+
+public class EmpSumList2 extends JFrame implements ActionListener {
+	JButton jbtn_select = new JButton("조회");
+	String headers [] = {"부서명","CLERK", "MANAGER", "ETC", "DEPT_SAL"};
+	String data[][] = new String [0][5];
+	DefaultTableModel dtm = new DefaultTableModel(data,headers);
+	
+	
+	Connection con = null;
+	PreparedStatement pstme =null;
+	ResultSet rs = null;
+	
+	DBConnectionMgr dbMgr = new DBConnectionMgr(); //뷰2 디비커넥션을 빌려옴.
+	
+	public EmpSumList2() {
+		jbtn_select.addActionListener(this);
+		initDisplay();
+		
+	}
+	
+	public void initDisplay() {
+		
+	}
+	
+	public static void main(String[] args) {
+		new EmpSumList2(); //메인메소드 호출
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
+}

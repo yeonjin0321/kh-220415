@@ -13,6 +13,7 @@ public class DBConnectionMgr {
 	public static final String url = "jdbc:oracle:thin:@127.0.0.1:1521:orcl11";
 	public static final String user = "scott";
 	public static final String pw = "tiger";
+	
 	public Connection getConnection()
 	{
 		try {

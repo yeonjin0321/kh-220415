@@ -1,0 +1,23 @@
+package ajdbc.dept;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
+
+public class EmpSumList2 extends JFrame implements ActionListener {
+
+	
+	public static void main(String[] args) {
+		new EmpSumList2(); //메인메소드 호출
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
+}

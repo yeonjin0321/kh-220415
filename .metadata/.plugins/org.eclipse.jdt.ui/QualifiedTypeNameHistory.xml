@@ -32,12 +32,13 @@
     <fullyQualifiedTypeName name="java.awt.Toolkit"/>
     <fullyQualifiedTypeName name="java.awt.BorderLayout"/>
     <fullyQualifiedTypeName name="java.sql.DriverManager"/>
-    <fullyQualifiedTypeName name="java.sql.Connection"/>
     <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
-    <fullyQualifiedTypeName name="java.sql.ResultSet"/>
     <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
     <fullyQualifiedTypeName name="ajdc.dept.LoginDao"/>
-    <fullyQualifiedTypeName name="java.awt.Color"/>
     <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="java.awt.Color"/>
     <fullyQualifiedTypeName name="address.view2.DBConnectionMgr"/>
+    <fullyQualifiedTypeName name="java.sql.Connection"/>
+    <fullyQualifiedTypeName name="java.sql.ResultSet"/>
+    <fullyQualifiedTypeName name="java.util.Vector"/>
 </qualifiedTypeNameHistroy>
