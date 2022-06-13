@@ -1,0 +1,35 @@
+package ajdbc.crud;
+
+import java.awt.FlowLayout;
+
+import javax.swing.JFrame;
+
+public class DeptView extends JFrame {
+
+	public DeptView() {
+		initDisplay();
+	}
+	// 화면처리부
+	// 화면 처리부
+	public void initDisplay() {
+		jp_north.setLayout(new FlowLayout(FlowLayout.LEFT));
+		jp_north.add(jbtn_sel);
+		jp_north.add(jbtn_ins);
+		jp_north.add(jbtn_upd);
+		jp_north.add(jbtn_del);
+		jp_south.add(jtf_deptno);
+		jp_south.add(jtf_dname);
+		jp_south.add(jtf_loc);
+		this.add("North", jp_north);
+		this.add("Center", jsp);
+		this.add("South", jp_south);
+		this.setTitle("부서관리시스템");
+		this.setSize(600, 400);
+		this.setVisible(true);
+	}
+	
+	public static void main(String[] args) {
+		new DeptView();
+	}
+
+}

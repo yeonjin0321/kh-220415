@@ -1,0 +1,5 @@
+package ajdbc.crud;
+
+public class DeptController {
+
+}

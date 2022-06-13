@@ -1,0 +1,12 @@
+package ajdbc.crud;
+
+public class DeptController {
+	private final String _DEL = "delete";
+	private final String _INS = "insert";
+	private final String _UPD = "update";
+	private final String _SEL = "select";
+	
+	public DeptController() {}
+	public DeptController(DeptVO, pdVO) {}
+
+}

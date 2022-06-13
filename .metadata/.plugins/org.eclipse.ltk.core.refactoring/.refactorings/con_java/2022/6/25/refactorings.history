@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;ajdbc.crud.DeptControllor&apos; to &apos;DeptController&apos;&#x0D;&#x0A;- Original project: &apos;con_java&apos;&#x0D;&#x0A;- Original element: &apos;ajdbc.crud.DeptControllor&apos;&#x0D;&#x0A;- Renamed element: &apos;ajdbc.crud.DeptController&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;DeptControllor&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;ajdbc.crud{DeptControllor.java[DeptControllor" matchStrategy="1" name="DeptController" qualified="false" references="true" similarDeclarations="false" stamp="1655094791858" textual="false" version="1.0"/>
+</session>

@@ -10,8 +10,10 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="user"/>
+		<item key="selection" value="UPDATE"/>
 		<list key="findhistory">
+			<item value="update"/>
+			<item value="==1"/>
 			<item value="user"/>
 			<item value="main"/>
 			<item value="deo"/>
