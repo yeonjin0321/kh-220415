@@ -1,0 +1,284 @@
+package ajdbc.crud;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import address.view2.DBConnectionMgr; //db커넥션 //vo
+import oracle.vo.DeptVO;
+
+// 단일 상속의 단점을 보완하기 위해서 인터페이스를 제공하고 있다.
+// 인터페이스는 다중 처리 가능하다
+public class CRUDDept2 extends JFrame implements ActionListener, MouseListener {
+	// 선언부
+	DBConnectionMgr dbMgr = new DBConnectionMgr();
+	Connection con = null;
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	// db연동
+
+	public CRUDDept2() {
+
+	}
+
+	/*******************************************************************
+	 * 부서 등록 구현 VO(Value Object) - 오라클 타입과 자바타입비교 - 컬럼명과 VO전변과 Map의 키값은 반드시 일치해야 한다.
+	 * 
+	 * @param pdVO - 사용자가 입력한 부서번호, 부서명, 지역을 받는다 - 복합데이터 클래스
+	 * @return int - 1:등록 성공 0: 등록 실패 INSERT INTO dept(deptno, dname, loc)
+	 *         VALUES(71,'개발1팀','서귀포')
+	 *******************************************************************/
+	public int deptInsert(DeptVO pdVO) {
+		System.out.println("입력 호출 성공");
+		int result = 0;
+		StringBuilder sql = new StringBuilder();
+		sql.append("INSERT INTO dept(deptno, dname, loc");
+		sql.append(" VALUES(?,?,?)");
+		// 예외처리 해주기
+		try {
+			con = dbMgr.getConnection();
+			pstmt = con.prepareStatement(sql.toString());
+
+			int i = 0;
+			pstmt.setInt(++i, pdVO.getDeptno());
+			pstmt.setString(++i, pdVO.getDname());
+			pstmt.setString(++i, pdVO.getLoc());
+
+			result = pstmt.executeUpdate(); // 오라클 입력 처리를 성공 하였을때 1을 돌려 받는다.
+
+			if (result == 1) {
+				deptSelectAll(); // - 입력성공후에 초기화 시키는것
+				SetDeptno(0);
+				setDname("");
+				setLoc("");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBConnectionMgr.freeConnection(pstmt, con);
+		}
+		return result;
+	}
+
+	/*******************************************************************
+	 * 부서 수정 구현
+	 * 
+	 * @param pdVO - 사용자가 입력한 부서번호, 부서명, 지역을 받는다 - 복합데이터 클래스
+	 * @return int - 1:등록 성공 0: 등록 실패 UPDATE dept SET dname = '개발2팀' ,loc = '거제도'
+	 *         WHERE deptno = 71
+	 *******************************************************************/
+	public int deptUpdate(DeptVO pdVO) {
+
+		System.out.println("업데이트 호출 성공");
+		StringBuilder sql = new StringBuilder();
+		sql.append("UPDATE dept      ");
+		sql.append("   SET dname = ? ");
+		sql.append("      ,loc = ?   ");
+		sql.append(" WHERE deptno = ?");
+
+		int result = 0;
+		// 예외처리
+		try {
+			con = dbMgr.getConnection();
+			pstmt = con.prepareStatement(sql.toString());
+			int i = 1;
+			pstmt.setString(i++, pdVO.getDname());
+			pstmt.setString(i++, pdVO.getLoc());
+			pstmt.setInt(i++, pdVO.getDeptno());
+			result = pstmt.executeUpdate();
+
+			if (result == 1) {
+				JOptionPane.showMessageDialog(this, "데이터가 수정 되었습니다.", "INFO", JOptionPane.INFORMATION_MESSAGE);
+				deptSeleteAll(); // 새로고침 메소드 처리하기. 메소드 재사용성.
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBConnectionMgr.freeConnection(pstmt, con);
+
+		}
+		return result; // if문의 결과값 출력.
+	}
+
+	/*******************************************************************
+	 * 부서 삭제 구현
+	 * 
+	 * @param deptno(int) - 사용자가 선택한 부서번호
+	 * @return int - 1:등록 성공 0: 등록 실패 DELETE FROM dept WHERE deptno = 71
+	 *******************************************************************/
+
+	public int deptDelete(int deptno) {
+		System.out.println("삭제 호출 성공: " + deptno);
+		int result = 0;
+		StringBuilder sql = new StringBuilder();
+		sql.append("DELETE FROM dept WHERE deptno = ?");
+
+		try {
+			con = dbMgr.getConnection();
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setInt(1, deptno);// 첫번째 '?' 부분에 deptno를 넣겠다.
+			result = pstmt.executeUpdate();
+			if (result == 1) {
+				JOptionPane.showMessageDialog(this, "데이터가 삭제되었습니다", "info", JOptionPane.INFORMATION_MESSAGE);
+				deptSelectAll();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBConnectionMgr.freeConnection(pstmt, con);
+		}
+		return result;
+	}
+
+	/********************************************************************
+	 * 부서 목록 전체 조회 구현(새로고침시 재사용 위해서)
+	 * 
+	 * @return List<Map<String,Object>> SELECT deptno, dname, loc FROM dept
+	 ********************************************************************/
+	public List<Map<String, Object>> deptSelectAll() {
+		List<Map<String, Object>> deptList = new ArrayList<>();
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT deptno, dname, loc FROM dept");
+		// 예외처리
+		try {
+			con = dbMgr.getConnection();
+			pstmt = con.prepareStatement(sql.toString());
+			rs = pstmt.executeQuery();
+			Map<String, Object> rmap = null; // rmap 설정
+			while (rs.next()) {
+				rmap = new HashMap<>(); // 같은 이름의 변수이지만 서로 다른 주소번지를 갖는다.
+				rmap.put("deptno", rs.getInt("deptno"));
+				rmap.put("dname", rs.getString("dname"));
+				rmap.put("loc", rs.getString("loc"));
+				deptList.add(rmap);
+			}
+			while (dtm.getRowCount() > 0) {
+				// 파라미터에 0을 주어서 테이블의 인덱스가 바뀌는 문제를 해결함
+				dtm.removeRow(0);
+			}
+			// Iterator는 자료구조가 갖고 있는 정보의 유무를 체크하는데 필요한 메소드를 제공하고 있다.
+			Iterator<Map<String,Object>> iter = deptList.iterator();
+			Object keys[] = null;
+			while(iter.hasNext()) {
+				Map<String,Object> data = iter.next();
+				Vector<Object> oneRow = new Vector<>();
+				oneRow.add(data.get(keys[2]));
+				oneRow.add(data.get(keys[1]));
+				oneRow.add(data.get(keys[0]));
+				// 데이터셋인 DefaultTableModel에 조회 결과  담기 - 반복처리함 => 10, 20, 30, 40
+				dtm.addRow(oneRow);
+				
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBConnectionMgr.freeConnection(rs, pstmt, con);
+		}
+		return deptList;
+	}
+
+	/********************************************************************
+	 * 부서 상세 조회 구현
+	 * @param deptno(int)
+	 * @return DeptVO
+	 * SELECT deptno, dname, loc FROM dept
+	 *  WHERE deptno = ?
+	 ********************************************************************/
+	
+	public DeptVO deptSelectDetail(int deptno){
+		
+		System.out.println("상세조회 호출 성공");
+		
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT deptno, dname, loc FROM dept");
+		sql.append(" WHERE deptno = ?		           ");
+		DeptVO rdVO = null;
+		try {
+			con = dbMgr.getConnection();
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setInt(1, deptno);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				rdVO = new DeptVO();
+				rdVO.setDeptno(rs.getInt("deptno"));
+				rdVO.setDname(rs.getString("dname"));
+				rdVO.setLoc(rs.getString("loc"));
+				
+			}
+			if(rdVO != null) {
+				setDeptno(rdVO.getDeptno());
+				setDname(rdVO.getDname());
+				setLoc(rdVO.getLoc());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBConnectionMgr.freeConnection(rs, pstmt, con);
+		}
+		return rdVO;
+	}
+	
+	public void initDisplay() {
+		
+		
+		
+	}
+	
+	public static void main(String[] args) {
+		new CRUDDept2();
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

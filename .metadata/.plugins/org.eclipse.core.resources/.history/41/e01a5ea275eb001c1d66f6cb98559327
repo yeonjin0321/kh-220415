@@ -1,0 +1,5 @@
+package ajdbc.crud2;
+
+public class Dept2View {
+
+}

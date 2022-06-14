@@ -12,6 +12,7 @@ public class DeptVO {
 	private String command = "";
 	// 오라클 서버에 입력,수정,삭제 요청 후 돌려받는 값 담기
 	private int	   result  = 0;
+	
 	public int getDeptno() {
 		return deptno;
 	}
