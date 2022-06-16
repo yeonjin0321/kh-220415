@@ -10,8 +10,9 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="UPDATE"/>
+		<item key="selection" value="&apos;"/>
 		<list key="findhistory">
+			<item value="&apos;"/>
 			<item value="update"/>
 			<item value="==1"/>
 			<item value="user"/>
@@ -23,6 +24,7 @@
 			<item value="math"/>
 		</list>
 		<list key="replacehistory">
+			<item value="&quot;"/>
 			<item value="Test_1"/>
 			<item value="jumsu"/>
 			<item value="jpn"/>

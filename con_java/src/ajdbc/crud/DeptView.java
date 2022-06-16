@@ -46,7 +46,7 @@ public class DeptView extends JFrame implements ActionListener, MouseListener{
 	}
 	// 화면 처리부
 	public void initDisplay() {
-		jp_north.setLayout(new FlowLayout(FlowLayout.LEFT));
+		jp_north.setLayout(new FlowLayout(FlowLayout.CENTER));
 		jp_north.add(jbtn_sel);
 		jp_north.add(jbtn_ins);
 		jp_north.add(jbtn_upd);
@@ -78,7 +78,6 @@ public class DeptView extends JFrame implements ActionListener, MouseListener{
 		pdVO.setCommand("select");
 		pdVO.setDeptno(udeptno);
 		deptCtrl.send(pdVO);
-		
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {

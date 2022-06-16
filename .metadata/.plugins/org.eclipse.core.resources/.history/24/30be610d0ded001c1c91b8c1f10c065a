@@ -1,0 +1,98 @@
+package ajdbc.member;
+
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+// JFrame jf = new JFrame();
+// jf.setTitle("자바실습");
+
+// JFrame jf = new JFrame("자바실습");
+
+public class MemberApp extends JFrame implements ActionListener, MouseListener {
+	JPanel 		jp_north 	= new JPanel();// 디폴트레이아웃:FlowLayout
+	JButton 	jbtn_sel 	= new JButton("조회");
+	JButton 	jbtn_ins 	= new JButton("입력");
+	JButton 	jbtn_upd 	= new JButton("수정");
+	JButton 	jbtn_del 	= new JButton("삭제");
+
+	String cols[] = {"번호","이름","아이디","주소"}; //jtable에 들어갈 1차 배열 선언.
+	String data[][] = new String[0][4];
+	DefaultTableModel dtm = new DefaultTableModel(data,cols); // 생성자의 파라미터를 이용하여 코드량을 줄임.
+	JTable jtb = new JTable(dtm);
+	Font font = new Font("돋움체",Font.BOLD,18); // 글씨체 처리
+	JScrollPane jsp = new JScrollPane(jtb); //jtable을 스크롤에 넣는다.
+	
+	
+	
+	
+	
+	public  MemberApp () {
+		initDisplay();
+	}
+	
+	public void initDisplay() {
+		this.add("Center",jsp);
+		this.setTitle("회원관리시스템");
+		this.setSize(600, 400);
+		this.setVisible(true);
+		jp_north.setLayout(new FlowLayout(FlowLayout.LEFT));
+		jp_north.add(jbtn_sel);
+		jp_north.add(jbtn_ins);
+		jp_north.add(jbtn_upd);
+		jp_north.add(jbtn_del);
+		
+		this.add("North", jp_north); //붙이는거
+	}
+	
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public static void main(String[] args) {
+			new MemberApp();
+	}
+
+}

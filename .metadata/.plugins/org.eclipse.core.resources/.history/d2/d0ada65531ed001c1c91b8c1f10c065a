@@ -1,0 +1,127 @@
+package ajdbc.member;
+
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
+import address.view2.DBConnectionMgr;
+
+public class ZipcodeSearch extends JFrame implements FocusListener {
+
+	// 선언부
+
+	JPanel jp_north = new JPanel();
+	JTextField jtf_dong = new JTextField("동 이름을 입력하세요", 20);
+	JButton jbtn_search = new JButton("찾기");
+	String zdos[] = { "전체", "서울", "경기" };
+	JComboBox jcb = new JComboBox(zdos);
+	String cols[] = { "우편번호", "주소" };
+	String data[][] = new String[0][2];
+	DefaultTableModel dtm = new DefaultTableModel(data, cols);
+	JTable jtb = new JTable(dtm);
+	Font font = new Font("돋움체", Font.BOLD, 18);
+	JScrollPane jsp = new JScrollPane(jtb);
+	// db연동//
+	DBConnectionMgr dbMgr = new DBConnectionMgr();
+	Connection con = null;
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+
+	// 생성자
+	public ZipcodeSearch() {
+	}
+
+	// 화면처리부
+	public void initDisplay() {
+		jtf_dong.addFocusListener(this); // 내가 이벤트처리도 담당하는 것. this 넘김.
+		jp_north.setLayout(new BorderLayout());
+		jp_north.add("West", jcb);
+		jp_north.add("Center", jtf_dong);
+		jp_north.add("East", jbtn_search);
+		this.add("North", jp_north);
+		this.add("Center", jsp);
+		this.setTitle("우편번호 검색기 Ver1.0");
+		this.setSize(430, 400);
+		this.setVisible(true);
+
+	}
+
+	public void refreshData(String dong) {
+		StringBuilder sql = new StringBuilder();
+		List<Map<String, Object>> zipList = new ArrayList<>();
+
+		sql.append(" select           ");
+		sql.append(" zipcode,address ");
+		sql.append(" from zipcode_t ");
+		sql.append(" where dong LIKE '%' ||?||'%' ");
+
+		try {
+			con = dbMgr.getConnection();
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, dong);
+			rs = pstmt.executeQuery();
+			Map<String, Object> rmap = null;
+			
+			while (rs.next()) { // 반복문 처리 로직 이해하기.
+				rmap = new HashMap<>();
+				rmap.put("zipcode", rs.getString("zipcode"));
+				rmap.put("address", rs.getString("address"));
+
+				zipList.add(rmap); // 	List<Map<String, Object>> zipList = new ArrayList<>(); 참고
+			}
+			//조회된 결과를 DefalutTableModel에 매핑하기!
+		  for(int i = 0; i<zipList.size();i++) {
+			  Map<String,Object> map = zipList.get(i);
+			  Vector<Object> oneRow = new Vector<>();
+		  }
+			
+		} catch (SQLException se) {
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBConnectionMgr.freeConnection(rs, pstmt, con);
+		}
+	}
+
+	// 메인메소드
+	public static void main(String[] args) {
+		ZipcodeSearch zc = new ZipcodeSearch();
+		zc.initDisplay();
+
+	}
+
+	@Override
+	public void focusGained(FocusEvent e) {
+		if (e.getSource() == jtf_dong) {
+			jtf_dong.setText(""); // 빈문자열로 바꿔주세요.
+
+		}
+	}
+
+	@Override
+	public void focusLost(FocusEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

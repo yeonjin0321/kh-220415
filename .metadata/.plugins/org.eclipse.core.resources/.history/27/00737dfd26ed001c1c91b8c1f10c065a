@@ -1,0 +1,52 @@
+package ajdbc.member;
+
+import java.awt.BorderLayout;
+import java.awt.Font;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
+public class ZipcodeSearch extends JFrame {
+
+	// 선언부
+
+	JPanel jp_north = new JPanel();
+	JTextField jtf_dong = new JTextField("동 이름을 입력하세요", 20);
+	JButton jbtn_search = new JButton("찾기");
+	String cols[] = { "우편번호", "주소" };
+	String data[][] = new String[0][2];
+	DefaultTableModel dtm = new DefaultTableModel(data, cols);
+	JTable jtb = new JTable(dtm);
+	Font font = new Font("돋움체", Font.BOLD, 18);
+	JScrollPane jsp = new JScrollPane(jtb);
+
+	// 생성자
+	public ZipcodeSearch() {
+	}
+
+	// 화면처리부
+	public void initDisplay() {
+		jp_north.setLayout(new BorderLayout());
+		jp_north.add("Center",jtf_dong);
+		jp_north.add("East", jbtn_search);
+		this.add("North",jp_north);
+		this.add("Center", jsp);
+		this.setTitle("우편번호 검색기 Ver1.0");
+		this.setSize(430, 400);
+		this.setVisible(true);
+
+	}
+
+	// 메인메소드
+	public static void main(String[] args) {
+		ZipcodeSearch zc = new ZipcodeSearch();
+		zc.initDisplay();
+
+	}
+
+}

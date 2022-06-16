@@ -38,7 +38,6 @@ public class Dept2View extends JFrame implements ActionListener, MouseListener{
 	JTextField 	jtf_dname  	= new JTextField("",20);
 	JTextField 	jtf_loc  	= new JTextField("",20);	
 	Dept2Controller deptCtrl = new Dept2Controller(this);
-	
 	public Dept2View() {
 		jbtn_sel.addActionListener(this);
 		jbtn_ins.addActionListener(this);
@@ -57,30 +56,19 @@ public class Dept2View extends JFrame implements ActionListener, MouseListener{
 		jp_south.add(jtf_deptno);
 		jp_south.add(jtf_dname);
 		jp_south.add(jtf_loc);
-		this.add("North", jp_north);//jpanel
-		this.add("Center",jsp); //JScrollPane 
-		this.add("South", jp_south); //jpanel
+		this.add("North", jp_north);
+		this.add("Center",jsp);
+		this.add("South", jp_south);
 		this.setTitle("부서관리시스템");
 		this.setSize(600, 400);
 		this.setVisible(true);
 	}	
 	public static void main(String[] args) {
-		new Dept2View();
+		new DeptView();
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		int index[] =jtb.getSelectedRows();// 테이블의 데이터를 선택하지 않은 경우
-		if(index.length == 0 ) {
-			JOptionPane.showMessageDialog(this, "조회할 데이터를 선택하시오","ERROR",JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		int udeptno =0 ;
-		udeptno = Integer.parseInt(dtm.getValueAt(index[0], 0).toString()); //dtm 에서 0,0에 있는 투스트링-> 인수변환.
-		DeptVO pdVO = new DeptVO();
-		pdVO.setCommand("select");
-		pdVO.setDeptno(udeptno);
-		deptCtrl.send(pdVO);
-		
+		// TODO Auto-generated method stub
 		
 	}
 	@Override
@@ -109,50 +97,26 @@ public class Dept2View extends JFrame implements ActionListener, MouseListener{
 		// 너 조회 누른거야?
 		if(obj == jbtn_sel) {
 			System.out.println("전체조회 호출 성공");
-			deptCtrl.deptSelectAll();
+			// insert here
+			
 		}
 		//입력하고 싶니?
 		else if(obj == jbtn_ins) {
 			System.out.println("입력 호출 성공");
-			String deptno = getDeptno();
-			String dname = getDname();
-			String loc = getLoc();
-			DeptVO pdVO = new DeptVO();
-			pdVO.setCommand("insert");
-			pdVO.setDeptno(Integer.parseInt(deptno));
-			pdVO.setDname(dname);
-			pdVO.setLoc(loc);
-			deptCtrl.send(pdVO);
+			// insert here
 			
 		}
 		//수정할거야?
 		else if(obj == jbtn_upd) {
 			System.out.println("수정 호출 성공");
-			String deptno = getDeptno();
-			String dname = getDname();
-			String loc = getLoc();
-			DeptVO pdVO = new DeptVO();
-			pdVO.setCommand("update");
-			pdVO.setDeptno(Integer.parseInt(deptno));
-			pdVO.setDname(dname);
-			pdVO.setLoc(loc);			
-			deptCtrl.send(pdVO);
+			// insert here
+			
 		}
 		//삭제를 원해? - view -> action(delete) -> action(select all) -> view
 		else if(obj == jbtn_del) {
 			System.out.println("삭제 호출 성공");
-			int index[] = jtb.getSelectedRows(); // 제이테이블의 데이터들
-			if(index.length == 0) { // 아무것도 안선택했을때.
-				JOptionPane.showMessageDialog(this, "삭제할 데이터를 선택하세요....", "Error", JOptionPane.ERROR_MESSAGE);
-				return; //오류 나옴.
-			}else {
-				Integer deptno = (Integer)dtm.getValueAt(index[0], 0);
-				System.out.println("사용자가 선택한 부서번호 : "+deptno);
-				DeptVO pdVO = new DeptVO();
-				pdVO.setCommand("delete");
-				pdVO.setDeptno(deptno);
-				deptCtrl.send(pdVO);
-			}
+			// insert here
+			
 		}
 		
 	}
