@@ -35,7 +35,7 @@ public class CRUDDept2 extends JFrame implements ActionListener, MouseListener {
 	Connection con = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
-	// db연동
+	// db연동//
 	// JFrame의 디폴트 레이아웃은 BorderLayout
 	JPanel jp_north = new JPanel(); //디폴트레이아웃:flowLatout
 	JButton jbtn_sel = new JButton("조회");
@@ -44,7 +44,7 @@ public class CRUDDept2 extends JFrame implements ActionListener, MouseListener {
 	JButton jbtn_del = new JButton("삭제");
 	// 서로 의존관계에 있다. - 의존성 주입(인스턴스화-싱글톤패턴), 객체 주입법, annotion
 	
-	String cols[] = {"부서번호","부서명","지역"};
+	String cols[] = {"부서번호","부서명","지역"};// 뒤에 더 추가해도 괜찮음.
 	String data[][] = new String[0][3];
 	DefaultTableModel dtm = new DefaultTableModel(data,cols);
 	JTable jtb = new JTable(dtm);
@@ -56,7 +56,7 @@ public class CRUDDept2 extends JFrame implements ActionListener, MouseListener {
 	JTextField jtf_loc = new JTextField("",20); //JTextField 로 한 줄 입력창 만들기
 	// 생성자
 
-	public CRUDDept2() {
+	public CRUDDept2() { // 생성자
 		// 이벤트 소스와 이벤트 핸들러 매핑하기
 	    // 내가 이벤트 처리를 담당하는 핸들러 클래스 이다.
 		// ActionListener al = new CRUDDept();
@@ -98,7 +98,7 @@ public class CRUDDept2 extends JFrame implements ActionListener, MouseListener {
 			// ? 자리는 1부터 이므로 ++i로 시작 한다.
 			// 만일 1로 초기화 했다면 i++로 하면 될 것이다.
 			int i = 0;
-			pstmt.setInt(++i, pdVO.getDeptno());
+			pstmt.setInt(++i, pdVO.getDeptno()); // 사용자가 입력한 deptno 가져오기.
 			pstmt.setString(++i, pdVO.getDname());
 			pstmt.setString(++i, pdVO.getLoc());
 			// select인 경우 커서를 리턴받고, insert, update, delete 인 경우는 int리턴 받음
@@ -107,7 +107,7 @@ public class CRUDDept2 extends JFrame implements ActionListener, MouseListener {
 			if(result == 1) {
 				deptSelectAll();
 				// 입력 성공 후에 화면에 대한 초기화 - 사용자의 편의성 제공
-				setDeptno(0);
+				setDeptno(0); // 초기화
 				setDname("");
 				setLoc("");
 			}
@@ -145,7 +145,7 @@ public class CRUDDept2 extends JFrame implements ActionListener, MouseListener {
 			pstmt.setInt(i++, pdVO.getDeptno());
 			result = pstmt.executeUpdate();
 
-			if (result == 1) {
+			if (result == 1) { //성공하였을때.
 				JOptionPane.showMessageDialog(this, "데이터가 수정 되었습니다.", "INFO", JOptionPane.INFORMATION_MESSAGE);
 				deptSelectAll(); // 새로고침 메소드 처리하기. 메소드 재사용성.
 
@@ -278,7 +278,7 @@ public class CRUDDept2 extends JFrame implements ActionListener, MouseListener {
 	
 	// 화면 처리부
 	public void initDisplay() {
-		jp_north.setLayout(new FlowLayout(FlowLayout.LEFT));
+		jp_north.setLayout(new FlowLayout(FlowLayout.CENTER));
 		jp_north.add(jbtn_sel);
 		jp_north.add(jbtn_ins);
 		jp_north.add(jbtn_upd);
@@ -310,8 +310,8 @@ public class CRUDDept2 extends JFrame implements ActionListener, MouseListener {
 			return;
 		}
 		int udeptno = 0;
-		udeptno = Integer.parseInt(dtm.getValueAt(index[0], 0).toString());
-		deptSelectDetail(udeptno);
+		udeptno = Integer.parseInt(dtm.getValueAt(index[0], 0).toString()); // 선택한 행을 to String
+		deptSelectDetail(udeptno); // 상세조회 더블클릭 마우스 클릭 처리
 	}
 
 	@Override
@@ -374,12 +374,12 @@ public class CRUDDept2 extends JFrame implements ActionListener, MouseListener {
 		//삭제를 원해? - view -> action(delete) -> action(select all) -> view
 		else if(obj == jbtn_del) {
 			System.out.println("삭제 호출 성공");
-			int index[] = jtb.getSelectedRows();
+			int index[] = jtb.getSelectedRows(); // 행을 선택했을때 -> 인덱스 배열
 			if(index.length == 0) {
 				JOptionPane.showMessageDialog(this, "삭제할 데이터를 선택하세요....", "Error", JOptionPane.ERROR_MESSAGE);
 				return;
 			}else {
-				Integer deptno = (Integer)dtm.getValueAt(index[0], 0);
+				Integer deptno = (Integer)dtm.getValueAt(index[0], 0); //선택한 행.
 				System.out.println("사용자가 선택한 부서번호 : "+deptno);
 				deptDelete(deptno);
 			}

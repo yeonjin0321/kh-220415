@@ -18,4 +18,4 @@ public class MemberSimulation {
 		System.out.println("result ==> "+result);//1이면 입력 성공임
 	}
 
-}
+} 

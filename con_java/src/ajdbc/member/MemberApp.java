@@ -41,8 +41,9 @@ public class MemberApp extends JFrame implements ActionListener, MouseListener {
 	String data[][] = new String[0][4];
 	DefaultTableModel dtm = new DefaultTableModel(data,cols);
 	JTable			  jtb = new JTable(dtm);
-	Font			  font = new Font("돋움체",Font.BOLD,18);
-	JScrollPane       jsp  = new JScrollPane(jtb);
+	Font			  font = new Font("돋움체",Font.BOLD,18); //헤더부분에 폰트 추가.
+	JScrollPane       jsp  = new JScrollPane(jtb); // 스크롤 속지. 내용이 많아지면.
+	//db연동부분//
 	DBConnectionMgr   dbMgr = new DBConnectionMgr();
 	Connection		  con	= null;
 	PreparedStatement pstmt = null;
@@ -61,7 +62,7 @@ public class MemberApp extends JFrame implements ActionListener, MouseListener {
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
 		if(obj == jbtn_ins) {
-			ms.initDisplay();
+			ms.initDisplay(); //눌렀을때 멤버십의 인잇디스플레이가 호출되는 것.!
 		}
 		else if(obj == jbtn_sel) {
 			refreshData();
@@ -83,13 +84,15 @@ public class MemberApp extends JFrame implements ActionListener, MouseListener {
 	    	rs = pstmt.executeQuery();
 	    	Map<String,Object> rmap = null;
 	    	while(rs.next()) {
-	    		rmap = new HashMap<>();
+	    		rmap = new HashMap<>(); //key값 , value값
 	    		rmap.put("mem_no", rs.getInt("mem_no"));
 	    		rmap.put("mem_id", rs.getString("mem_id"));
 	    		rmap.put("mem_name", rs.getString("mem_name"));
 	    		rmap.put("mem_address", rs.getString("mem_address"));
 	    		memList.add(rmap);
 	    	}
+	    	
+	
 	    	// insert here
 	    	//System.out.println(memList);
 	    	// 기존에 조회된 결과 즉 목록 삭제하기
@@ -121,7 +124,7 @@ public class MemberApp extends JFrame implements ActionListener, MouseListener {
 
 	}
 	public void initDisplay() {
-		jp_north.setLayout(new FlowLayout(FlowLayout.LEFT));
+		jp_north.setLayout(new FlowLayout(FlowLayout.CENTER));
 		jbtn_sel.setBackground(new Color(158,9,9));
 		jbtn_sel.setForeground(new Color(212,212,212));
 		jp_north.add(jbtn_sel);
@@ -135,7 +138,7 @@ public class MemberApp extends JFrame implements ActionListener, MouseListener {
 		jbtn_del.setForeground(new Color(212,212,212));
 		jp_north.add(jbtn_del);
 		this.add("North", jp_north);
-		this.add("Center",jsp);
+		this.add("Center",jsp); //중앙에 스크롤 배치!
 		this.setTitle("회원관리시스템 Ver1.0");
 		this.setSize(600, 400);
 		this.setVisible(true);

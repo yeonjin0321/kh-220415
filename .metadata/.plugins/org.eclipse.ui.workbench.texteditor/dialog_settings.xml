@@ -10,13 +10,14 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="&apos;"/>
+		<item key="selection" value="jbtn_join"/>
 		<list key="findhistory">
+			<item value="jbtn_join"/>
+			<item value="main"/>
 			<item value="&apos;"/>
 			<item value="update"/>
 			<item value="==1"/>
 			<item value="user"/>
-			<item value="main"/>
 			<item value="deo"/>
 			<item value="dep"/>
 			<item value="Quiz0516_1"/>

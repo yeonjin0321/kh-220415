@@ -14,7 +14,7 @@ public class DeptController {
 	private final String _SEL = "select";
 	DeptDao deptDao = null;
 	DeptView deptView = null;
-	public DeptController() {}
+	public DeptController() {} //디폴트생성자
 	public DeptController(DeptView deptView) {
 		this.deptView = deptView;
 		deptDao = new DeptDao(deptView);
