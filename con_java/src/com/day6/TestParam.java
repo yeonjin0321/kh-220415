@@ -1,20 +1,21 @@
 package com.day6;
-
+//ECS6 -> 클래스 지원하게됨.
 class Param{
 	int ival;// 전변 초기화 생략 가능 - 0
 }
 public class TestParam {
-	void effectParam(Param p) {
-		p = new Param();
-		p.ival = 300;
+	void effectParam(Param p) { // call by reference 원본의 주소번지를 갖고있다.
+		p = new Param(); //복사본이 생성되고 그러니까 새로운 객체가 생성됨. 타입은 같지만 객체는 다르다.
+		p.ival = 300; //원본의 ival 값이 0-> 500에서 300으로 바뀐다.
 		System.out.println("sub ival : "+p.ival);// 300
 	}
 	public static void main(String[] args) {
 		TestParam tp = new TestParam();
+		//인스턴스화가 진행 - 메모리에 로딩됨.
 		Param p = new Param();
-		p.ival  = 500;
-		tp.effectParam(p);
-		System.out.println("main ival : " + p.ival);//300
+		p.ival  = 500; //지변 p에 500이 초기화 됨.
+		tp.effectParam(p); //메인에서 출력전에 메소드 호출이 먼저 일어나서 8번으로 감.
+		System.out.println("main ival : " + p.ival);//500
 
 	}
 

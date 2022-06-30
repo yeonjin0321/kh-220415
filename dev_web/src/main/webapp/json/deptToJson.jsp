@@ -7,14 +7,30 @@
 <%@ page import="com.google.gson.Gson"%>
 <%
 //스크립틀릿 - 자바코드를 사용할 수 있다.
+//query string or query parameter -> get 방식이다, 가능, post는 불가능하다.
+// 전송방식 - get(단위테스트가능), post 방식은 반드시 javascript의 도움이 필요함
+String deptno = request.getParameter("deptno");
+//out.print("요청 파라미터에서 입력 받은 값 => " + deptno); json형식으로 받아들이지 x
 Connection con = null;
 PreparedStatement pstmt = null;
 ResultSet rs = null; //select 일때 테이블 안에 row를 읽어서 꺼냄
 DBConnectionMgr dbMgr = new DBConnectionMgr();
+
 List<Map<String, Object>> deptList = null;
-try {
+StringBuilder sql = new StringBuilder();
+sql.append("select deptno,dname,loc from dept");
+
+	if (deptno != null) {
+	sql.append("where deptno =?");
+	}
+	
+	try {
 	con = dbMgr.getConnection();
-	pstmt = con.prepareStatement("select deptno,dname,loc from dept");
+	pstmt = con.prepareStatement(sql.toString());
+	if (deptno != null) {
+		pstmt.setString(1, deptno);
+	}
+	
 	// 전달 된 select문에 대한 처리를 요청하고 커서 받아내기
 	rs = pstmt.executeQuery();
 	deptList = new ArrayList<>(); //어레이리스트배열을 deptlist에 담는다.
