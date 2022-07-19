@@ -1,6 +1,17 @@
 package address.view3;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
+
 public class RetrieveAddrEty {
+	// 이른 인스턴스화 (게으른 인스턴스화)
+	DBConnectionMgr 	dbMgr 	= new DBConnectionMgr();
+	Connection 			con 	= null;
+	PreparedStatement 	pstmt 	= null;
+	ResultSet 			rs 		= null;
 	/***************************************************************************
 	 * 회원정보 중 상세보기 구현 - 1건 조회
 	 * SELECT id, name, address, DECODE(gender,'1','남','여') as "성별"
@@ -25,7 +36,40 @@ public class RetrieveAddrEty {
 	 **************************************************************************/
 	public AddressVO[] retrieve() {
 		System.out.println("RetrieveAddrEty retrieve() 호출 성공");		
-		AddressVO[] vos = null;
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT id, name, address, telephone, gender         ");
+	    sql.append("      ,relationship, birthday, comments, registedate"); 
+	    sql.append("  FROM mkaddrtb                                     ");
+	    AddressVO[] vos = null;
+	    try {
+			con = dbMgr.getConnection();
+			pstmt = con.prepareStatement(sql.toString());
+			rs = pstmt.executeQuery();
+			Vector<AddressVO> v = new Vector<>();
+			AddressVO rVO = null;
+			while(rs.next()) {
+				rVO = new AddressVO(rs.getString("name")
+						           ,rs.getString("address")
+						           ,rs.getString("telephone")
+						           ,rs.getString("gender")
+						           ,rs.getString("relationship")
+						           ,rs.getString("birthday")
+						           ,rs.getString("comments")
+						           ,rs.getString("registedate")
+						           ,rs.getInt("id")
+						           );
+				v.add(rVO);// v.size()-> 배열의 크기 결정해야 함
+			}////////end of while
+			vos = new AddressVO[v.size()];
+			v.copyInto(vos);
+		} catch (SQLException se) {
+			System.out.println("[[query]]"+sql.toString());
+		} catch (Exception e) {
+			e.printStackTrace();// 에러 스택에 쌓여 있는 로그 정보 출력해줌.라인번호도 같이
+		} finally {
+			// DB연동에서 사용한 자원 반납하기
+			dbMgr.freeConnection(rs, pstmt, con);
+		}
 		return vos;
 	}
 }
