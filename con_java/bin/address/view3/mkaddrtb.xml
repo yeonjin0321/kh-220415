@@ -5,6 +5,8 @@
 		SELECT id, name, address, telephone
 		  FROM mkaddrtb ORDER BY name
 	</select>
+	
+	<!-- 
 	<insert id="insertAddress" parameterType="addressVO">
 		INSERT INTO mkaddrtb(name, address, telephone, gender
 		                   , relationship,birthday, comments, registedate, id)
@@ -25,6 +27,7 @@
 	</update>
 	<delete id = "deleteAddress" parameterType="addressVO">
 		DELETE FROM mkaddrtb WHERE id = #id#
-	</delete>		
+	</delete>	
+	 -->	
 </mapper>
 

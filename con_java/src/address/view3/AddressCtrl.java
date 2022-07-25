@@ -1,5 +1,8 @@
 package address.view3;
 
+import java.util.List;
+import java.util.Map;
+
 public class AddressCtrl {
 
 	private AddressVO returnVO = new AddressVO();
@@ -14,7 +17,7 @@ public class AddressCtrl {
 	public AddressCtrl() {
 	}
 
-	public AddressVO send(AddressVO vo) throws Exception {
+	public AddressVO send(AddressVO vo) {
 		String command = vo.getCommand(); //커맨드에 얻어오기
 
 		if (command.equals(_DEL)) {
@@ -28,10 +31,11 @@ public class AddressCtrl {
 			ModifyAddrEty modEty = new ModifyAddrEty();
 			returnVO = modEty.modify(vo);
 		} else if (command.equals(_SEL)) {
+			System.out.println("컨트롤 계층 - 상세보기 호출성공");
 			RetrieveAddrEty selEty = new RetrieveAddrEty();
 			returnVO = selEty.retrieve(vo);
-		} else
-			throw new Exception("잘못된 Command명(" + command + ")입니다.");
+		} 
+		
 
 		return returnVO;
 	}
@@ -43,6 +47,16 @@ public class AddressCtrl {
 		returnVOs = retEty.retrieve();			
 		return returnVOs;
 	}
+	
+	//해시맵으로 받아와야 하기 떄문에 바꿔줌. 	<select id="retrieveAll" resultType="java.util.HashMap">
+	public List<Map<String,Object>> myBatissend() {
+		System.out.println("AddressCtrl send 호출 성공");
+		List<Map<String,Object>> addressList = null;
+		RetrieveAddrEty retEty = new RetrieveAddrEty();
+		addressList = retEty.myBatisRetrieve();			
+		return addressList;
+	}
+	
 	
 }
 	

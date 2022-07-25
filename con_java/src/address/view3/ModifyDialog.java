@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-
+// 입력:insert, 수정:update 있는걸 바꾼다, 상세보기
 class ModifyDialog extends JDialog {
 
 	private static final long serialVersionUID = 1L;
@@ -189,7 +189,9 @@ class ModifyDialog extends JDialog {
 	 * @param vo
 	 * @param abook
 	 **************************************************************************/
+	// 자바 리펙토링
 	public void set(String title, boolean editable, AddressVO vo, AddressBook abook) {
+		// 수정 액션처리할 때(확인버튼 눌렀을 때- 1)입력(insert), 2)수정(update)
 		this.avo = vo;
 		this.abook = abook;
 		this.set(title, editable);
@@ -209,6 +211,7 @@ class ModifyDialog extends JDialog {
 	}
 
 	// 확인버튼 선택시 작업을 정의합니다.
+	// 콜백함수는 원본을 건드리지 않는다
   	private void btnOkayActionPerformed(ActionEvent evt) {
   		if(getName().trim().length() == 0) {
   			JOptionPane.showMessageDialog(this, "이름을 입력하세요.", "Error",
@@ -226,8 +229,16 @@ class ModifyDialog extends JDialog {
 				// vo를 send메소드의 파라미터로 넘기는 이유가 뭘까?
 				// 버튼은 AddressBook에 있는데... 처리는 ModifyDialog에서 해야 함
 				vo.setCommand("update");
+				vo.setName(getName());
+				vo.setAddress(getAddress());
+				vo.setGender(getGender());
+				//상세보기에서 아이디값을 출력하는 화면은 없으니까
+				vo.setId(avo.getId());
 				AddressCtrl ctrl = new AddressCtrl();
-				ctrl.send(vo);
+				AddressVO raVO = ctrl.send(vo);
+				if(raVO.getResult() == 1) {
+					abook.refreshData();// 새로고침
+				}				
 			}catch(Exception e){
 				JOptionPane.showMessageDialog(this, "수정중 에러가 발생했습니다." + e,
 						"Error", JOptionPane.ERROR_MESSAGE);				

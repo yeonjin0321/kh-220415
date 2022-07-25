@@ -16,6 +16,6 @@
 		</environment>
 	</environments>
 	<mappers>
-		<mapper resource="address/mvc/result/addrtbMapper.xml" />
+		<mapper resource="address/view3/mkaddrtb.xml" /> <!-- 물리적 위치 맞추기 -->
 	</mappers>
 </configuration>
