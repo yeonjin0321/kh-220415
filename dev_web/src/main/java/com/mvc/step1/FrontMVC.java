@@ -47,12 +47,14 @@ public class FrontMVC extends HttpServlet {
 			
 			af = boardController.execute(req, res); //액션포워드는 보드컨트롤러를 실행한다.
 		}
-		
+		//2022-08-03 추가
+		// 이 부분에 대해 2사람 이상에게 설명해 보자.
 		if (af != null) {
 			if (af.isRedirect()) {
 				// res.sendDiresct("xxx.jsp");
-				res.sendRedirect(af.getPath());
+				res.sendRedirect(af.getPath()); //유지가 안된다. sendRedirect 그리고 셀렉트일땐 절대 쓰면 안됨.
 			} else { // forward - 유지, 주소안변함, 그런데 페이지는 바뀌었다.
+				//select문이라면 무조건 이걸 써야함. 셀렉트 -> forward (왜냐면 그 화면에서 선택하는거니깐 just 검색 조회.)
 				RequestDispatcher view = req.getRequestDispatcher(af.getPath());
 				view.forward(req, res);
 

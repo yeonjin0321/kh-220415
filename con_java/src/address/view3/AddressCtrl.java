@@ -18,24 +18,24 @@ public class AddressCtrl {
 	}
 
 	public AddressVO send(AddressVO vo) {
-		String command = vo.getCommand(); //커맨드에 얻어오기
+		String command = vo.getCommand();
 
 		if (command.equals(_DEL)) {
 			DeleteAddrEty delEty = new DeleteAddrEty();
-			returnVO = delEty.delete(vo);
+			returnVO = delEty.myBatisDelete(vo);
 		} else if (command.equals(_INS)) {
 			RegisterAddrEty insEty = new RegisterAddrEty();
-			returnVO = insEty.register(vo);
-			//insEty.insertAddress(vo);
+//			returnVO = insEty.register(vo);
+			returnVO = insEty.myBatisRegister(vo);
 		} else if (command.equals(_MOD)) {
 			ModifyAddrEty modEty = new ModifyAddrEty();
 			returnVO = modEty.modify(vo);
-		} else if (command.equals(_SEL)) {
+		} else if (command.equals(_SEL)) { //220728 한건처리
 			System.out.println("컨트롤 계층 - 상세보기 호출성공");
 			RetrieveAddrEty selEty = new RetrieveAddrEty();
-			returnVO = selEty.retrieve(vo);
-		} 
-		
+	//		returnVO = selEty.retrieve(vo);
+			returnVO = selEty.myBatisRetrieve(vo);
+		}
 
 		return returnVO;
 	}
@@ -47,16 +47,13 @@ public class AddressCtrl {
 		returnVOs = retEty.retrieve();			
 		return returnVOs;
 	}
-	
-	//해시맵으로 받아와야 하기 떄문에 바꿔줌. 	<select id="retrieveAll" resultType="java.util.HashMap">
-	public List<Map<String,Object>> myBatissend() {
-		System.out.println("AddressCtrl send 호출 성공");
+	public List<Map<String,Object>> myBatisSend() {
+		System.out.println("AddressCtrl myBatisSend 호출 성공");
 		List<Map<String,Object>> addressList = null;
 		RetrieveAddrEty retEty = new RetrieveAddrEty();
 		addressList = retEty.myBatisRetrieve();			
 		return addressList;
 	}
-	
 	
 }
 	

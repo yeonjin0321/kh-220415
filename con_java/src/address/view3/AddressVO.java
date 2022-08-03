@@ -23,11 +23,11 @@ public class AddressVO implements Serializable {
 	//-  insert, update, delete, select, selectall
 	private String command;// 입력, 수정, 삭제, 조회
 	// 오라클 서버에서 보내준 입력|수정|삭제 처리 결과를 담을 변수
-	private int result; 
+	private int result;
 
-	private AddressVO[] AddressVOS; //배열
+	private AddressVO[] AddressVOS;
 
-	public AddressVO() {} //디폴트 생성자
+	public AddressVO() {}
 
 	public AddressVO(String name, String address, String telephone,
 			String gender, String relationship, String birthday,

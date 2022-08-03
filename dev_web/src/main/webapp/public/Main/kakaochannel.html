@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- 부트스트랩 사용 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OHGYM - Community - 자주하는 질문</title>
+    <link rel="stylesheet" href="/home.css">
+    <!-- 테스트용 스크립트 시작! -->
+    <script src = "./notice.js"></script>
+    <!-- <script src = "./test.js"></script> -->
+  </head>
+  <!-- BODY 시작! -->
+  <body>
+    <div class="header">
+      <nav class="top-bar">
+          <li><a href="#">BOOKMARK</a></li>
+      </nav>
+    </div>
+
+    <h1 class="">OhGYM</h1>
+  
+    <div class="category">
+        <nav class="menu">
+          <li><a href="../../index.html">HOME</a></li>
+          <li><a href="#">센터소개</a></li>
+          <li><a href="#">트레이너소개</a></li>
+          <li><a href="#">프로그램안내</a></li>
+          <li><a href="#">프로그램예약</a></li>
+          <li><a href="#">커뮤니티</a></li>
+        </nav>
+    </div>
+
+<!-- 각 카테고리의 콘텐츠를 담아야합니다. 여기에 코딩해주세요 !!!!! -->
+<!-- Main -->
+<!------------------------------------------------------- 채은 영역 시작 ------------------------------------->
+<!------------------------------------------------------- 주 기능 : 1:1상담 문의하기 ------------------------------------->
+<div class="contents-box">
+
+  <!-- mini-nav : 단순히 현재 페이지의 경로를 표시해 주는 용도 -->
+  <div id="mini-nav">
+    <label>커뮤니티</label>
+    <label> > </label>
+    <label> Q&A </label>
+  </div>
+
+<!-- 개발자가 기능 추가에 참고할 용도 (주석) -->
+<!-- <h3 style="color: blue;"> 🛠 이벤트 처리해야 할 것 🛠</h3>
+  <li style="color:cornflowerblue"> 테이블의 게시글 수는 한 페이지당 10개씩 보여야 하므로 10개가 넘으면 다음 페이지로 넘어가게 처리</li>
+  <li style="color:cornflowerblue"> 유저가 선택한 select 순으로 정렬 처리 </li>
+  <li style="color:cornflowerblue"> 상세조회 페이지로 페이징 처리 </li>
+  <li style="color:cornflowerblue"> 상세조회 페이지에서 게시글이 수정 혹은 삭제되었을 때 즉각 반영이 되도록 처리 </li>  -->
+
+<!-- main시작 -->
+<!-- *************************************** 카카오톡 채널추가 API 부분 ************************************* -->
+<section id="intro-section">
+  <div class="outline">
+    
+    <p> 📌  OhGym 회원님들께서 자주 문의해주시는 질문 모음입니다. 
+    <p>자세한 상담을 원하시면 <strong>OhGym 휘트니스 채널</strong>을 추가해주세요. </p>
+    </p>
+    <!-- API ui 블록 -->
+    <div
+    id="kakao-talk-channel-add-button"
+    data-channel-public-id="_xhXLRxj"
+    data-size="large"
+    data-support-multiple-densities="true">
+    </div>
+  </div>
+  <hr>
+</section>
+
+<!-- q&a 문서 넣을 부분 -->
+<div id="q-a">
+    <img src="/imgs/q1.png">
+    <hr>
+    <img src="/imgs/q2.png">
+    <hr>
+    <img src="/imgs/q2.png">
+    <hr>
+</div>
+
+<!-- API 스크립트 시작  **** 나중에 js 파일로 분리 예정입니다. -->
+  <script>
+    window.kakaoAsyncInit = function() {
+      Kakao.Channel.createAddChannelButton({
+        container: '#kakao-talk-channel-add-button',
+      });
+    };
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = 'https://developers.kakao.com/sdk/js/kakao.channel.min.js';
+      fjs.parentNode.insertBefore(js, fjs);
+    })(document, 'script', 'kakao-js-sdk');
+  </script>
+  
+<!-- API 스크립트 끝  -->
+<!-- *************************************** 카카오톡 채널추가 API 부분 ************************************* -->
+<!-- main끝 -->
+<!------------------------------------------------------- 채은 영역 끝 ------------------------------------->
+
+<!-- footer 시작! -->
+<footer class="info">
+  <nav>
+      <div class="link">
+          <p>GitHub
+              <a href="#">@slalom0914</a>
+              <a href="#">@yihyunkong</a>
+              <a href="#">@congs00n</a>
+              <a href="#">@qcmcm2</a>
+              <a href="#">@dongcarry96</a>
+          </p>
+      </div>
+      <div class="addr">
+          <p>
+              사업자등록번호: 128-23-45267 | 대표 : 김승수
+          | 개인정보보호책임자: 김승수 | 이메일 : dev_js@gmail.com
+          | 강남지원 1관 : 서울특별시 강남구 테헤란로14길 6 남도빌딩 2F
+          </p>
+      </div>
+  </nav>
+</footer>
+<!-- footer 끝! -->
+</body>
+</html>

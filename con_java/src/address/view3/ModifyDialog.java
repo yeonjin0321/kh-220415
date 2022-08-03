@@ -257,6 +257,7 @@ class ModifyDialog extends JDialog {
 				vo.setGender(getGender());
 				vo.setRelationship(getRelationShip());
 				vo.setBirthday(getBirthDay());
+				vo.setComments(getComment());
 				// 입력이든 수정이든 반드시 AddressCtrl를 경유한다. - 컨벤션(MVC 패턴)
 				AddressCtrl ctrl = new AddressCtrl();
 				// vo안에는 전변이 있다. 읽고(getter getXXX()) 쓰지(setter setXXX())?

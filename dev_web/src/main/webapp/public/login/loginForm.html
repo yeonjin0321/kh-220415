@@ -43,9 +43,7 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#">Home</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
+            
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 강사소개
@@ -56,10 +54,7 @@
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="#">강사지원</a></li>
               </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled">Disabled</a>
-            </li>
+        
           </ul>
         </div>
       </div>
@@ -89,7 +84,7 @@
       if (user) {
         console.log(user.uid);
         console.log(user.displayName);
-        $("#displayName").html(user.displayName+" 회원님");
+        $("#displayName").html(user.displayName);
       }
     });
       $("#login").click(function(){

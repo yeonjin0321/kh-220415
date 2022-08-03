@@ -1,6 +1,8 @@
 package com.mvc.step1;
 
 import java.io.IOException;
+
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+
 
 public class BoardController implements Action {
 	Logger logger = Logger.getLogger(BoardController.class);
@@ -26,6 +29,9 @@ public class BoardController implements Action {
 		logger.info("upmu[1] ===> " + upmu[1]);
 		boolean isRedirect = false; // true(주소창이 바뀐다) -sendRedirect false:유지 - forward
 		// 글쓰기
+		// 1-1에서는 메소드내에서 분기문으로 처리를 했다.
+		// 가독성이 별로임...
+		// 재사용성도 별로임
 		if ("boardInsert".equals(upmu[1])) {
 			logger.info("boardInsert 호출 성공");
 		}

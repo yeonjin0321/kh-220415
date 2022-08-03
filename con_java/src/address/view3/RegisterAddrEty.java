@@ -1,9 +1,15 @@
 package address.view3;
 
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 public class RegisterAddrEty {
 	DBConnectionMgr 	dbMgr	= new DBConnectionMgr();
@@ -54,6 +60,48 @@ public class RegisterAddrEty {
 				if(con != null) con.close();
 			} catch(SQLException e) {}
 		}		
+		return vo;
+	}////////////////////// end of register
+	public AddressVO myBatisRegister(AddressVO vo) {// 조인시에는 어떤 타입을 선택?
+		System.out.println("RegisterAddrEty register 호출 성공");
+		//물리적으로 떨어져 있는 오라클 서버에 커넥션을 연결할때
+		SqlSessionFactory sqlMapper = null;
+		String resource = "address/view3/MapperConfig.xml";
+		//쿼리문을 가지고 오라클서버에 요청하기
+		//select(조회,조건검색,전체조회), insert(수강신청,필라테스신청,회원가입,주문등록, 예매등록), update, delete
+		// sqlSes.selectOne():1건 , sqlSes.selectList():n건
+		// sqlSes.insert("id",VO)
+		SqlSession sqlSes = null;
+		int result = 0;
+		Reader reader = null;
+		try {
+			reader  = Resources.getResourceAsReader(resource);
+			sqlMapper = new SqlSessionFactoryBuilder().build(reader);
+			sqlSes = sqlMapper.openSession();	
+			System.out.println("address: "+vo.getAddress());
+			System.out.println("name: "+vo.getName());
+			System.out.println("gender: "+vo.getGender());
+			System.out.println("telephone: "+vo.getTelephone());
+			System.out.println("relationship: "+vo.getRelationship());
+			System.out.println("birthday: "+vo.getBirthday());
+			System.out.println("comments: "+vo.getComments());
+			//입력인데 왜 딜리트를 썼을까? 입력은 오브젝트 타입이라.
+			//반환값이므로 오브젝트이기 때문에 사용하였다.
+			// update메소드를 주더라도 같은 논리로 처리가 됨 (id로 dml을 호출하니까)
+			result = sqlSes.update("insertAddress", vo);
+			//result = sqlSes.delete("insertAddress", vo);
+			sqlSes.commit();
+			if(result < 1) {
+				String msg = "데이터 입력에 실패했습니다.";
+				System.out.println(msg);
+			} else if(result==1) {
+				System.out.println("데이터 입력에 성공했습니다.");
+				vo.setResult(result);
+			}
+		} catch(Exception e) {
+			String msg = "데이터 입력에 실패했습니다.";
+			System.out.println(msg + "\r\n" + e);
+		} 		
 		return vo;
 	}////////////////////// end of register
 

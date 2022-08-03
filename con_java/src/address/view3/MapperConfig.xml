@@ -16,6 +16,9 @@
 		</environment>
 	</environments>
 	<mappers>
-		<mapper resource="address/view3/mkaddrtb.xml" /> <!-- 물리적 위치 맞추기 -->
+		<mapper resource="address/view3/mkaddrtb.xml" />
+<!-- 		<mapper resource="address/view3/board.xml" /> -->
+<!-- 		<mapper resource="address/view3/board.xml" /> -->
+<!-- 		<mapper resource="address/view3/board.xml" /> -->
 	</mappers>
 </configuration>
